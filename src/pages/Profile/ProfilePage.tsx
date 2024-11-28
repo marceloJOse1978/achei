@@ -158,8 +158,8 @@ export function MyAccount({ data }: { data: any }) {
   });
 
   const onSubmit = (FormData: any) => {
-    console.log(data.error);
-    if (data.error)
+    console.log(data);
+    if (!data || data.error)
       submitData(FormData);
     else
       editData(FormData);
