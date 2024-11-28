@@ -22,9 +22,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { toast } from "react-toastify";
-import { GET_ME, GET_MY_CLASSES, GET_QUIZ, POST_PASSWORD, SUBMIT_DATA_STUDENT } from "@/lib/API";
+import { EDIT_DATA_STUDENT, GET_ME, GET_MY_CLASSES, GET_QUIZ, POST_PASSWORD, SUBMIT_DATA_STUDENT } from "@/lib/API";
 import { useUserContext } from "@/hooks/UserContext";
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTrigger } from "@/components/ui/dialog";
+import { format } from "date-fns";
 const schema = z.object({
   full_name: z.string().min(1, "Nome é obrigatório"),
   phone_number: z.string().min(9, "Telefone deve ter no mínimo 9 dígitos"),
@@ -95,6 +96,7 @@ export function MyAccount({ data }: { data: any }) {
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors },
     setValue,
     getValues,
@@ -104,6 +106,9 @@ export function MyAccount({ data }: { data: any }) {
   useEffect(() => {
     console.log(data)
     if (data && !data.error) {
+      const dataAread = window.localStorage.getItem("data-aready");
+      if (dataAread)
+        window.localStorage.removeItem("data-aready");
       console.log(data)
       setValue("full_name", data[0]?.full_name);
       setValue("phone_number", data[0]?.phone_number);
@@ -122,6 +127,10 @@ export function MyAccount({ data }: { data: any }) {
     mutationFn: SUBMIT_DATA_STUDENT,
     onSuccess(data) {
       console.log(data);
+      if (data.message) {
+        toast.error("Erro ao salvar dados");
+        return;
+      }
       toast.success("Dados salvos com sucesso");
       window.localStorage.removeItem("data-aready");
     },
@@ -131,15 +140,35 @@ export function MyAccount({ data }: { data: any }) {
     },
   });
 
-  const onSubmit = (data: any) => {
-    console.log(data);
-    submitData(data);
+
+  const { mutateAsync: editData, isPending: isPedingEdit } = useMutation({
+    mutationFn: EDIT_DATA_STUDENT,
+    onSuccess(data) {
+      console.log(data);
+      if (data.message) {
+        toast.error("Erro ao editar dados");
+        return;
+      }
+      toast.success("Dados editados com sucesso");
+    },
+    onError(error) {
+      console.log(error);
+      toast.error("Erro ao editar dados");
+    },
+  });
+
+  const onSubmit = (FormData: any) => {
+    console.log(data.error);
+    if (data.error)
+      submitData(FormData);
+    else
+      editData(FormData);
   };
-
   useEffect(() => {
-
+    const dataBirth = format(date, "yyyy-MM-dd");
+    console.log("dataBirth ", dataBirth)
     if (!data?.error && date) {
-      setValue("birth_date", date?.toISOString().split("T")[0]);
+      setValue("birth_date", dataBirth);
     }
   }, [date, data]);
   console.log("data ", date)
@@ -154,7 +183,7 @@ export function MyAccount({ data }: { data: any }) {
         <fieldset className="flex flex-col w-full gap-2 md:flex-1 ">
           <Label>Nome</Label>
           <Input
-            readOnly={!data?.error}
+
             placeholder="Seu nome"
             type="text"
             {...register("full_name")}
@@ -164,7 +193,7 @@ export function MyAccount({ data }: { data: any }) {
         <fieldset className="flex flex-col w-full gap-2 md:w-72">
           <Label>Telefone</Label>
           <Input
-            readOnly={!data?.error}
+
             placeholder="Seu Telefone"
             type="text"
             {...register("phone_number")}
@@ -179,7 +208,7 @@ export function MyAccount({ data }: { data: any }) {
       <fieldset className="flex flex-col w-full gap-2">
         <Label>Endereço</Label>
         <Input
-          readOnly={!data?.error}
+
           placeholder="Seu Endereço"
           type="text"
           {...register("address")}
@@ -189,13 +218,13 @@ export function MyAccount({ data }: { data: any }) {
       <fieldset className="flex flex-col w-full gap-2">
         <Label>Email</Label>
         <Input
-          readOnly={!data?.error} placeholder="" value={user?.email} disabled type="email" />
+          placeholder="" value={user?.email} disabled type="email" />
       </fieldset>
       <div className="flex flex-col items-center w-full gap-4 md:flex-row md:flex-1">
         <fieldset className="flex flex-col w-full gap-2 md:flex-1">
           <Label>Selecione tipo de documento</Label>
           <Select
-            disabled={!data?.error}
+            value={watch("id_type")}
             {...register("id_type")}
             onValueChange={(value) => setValue("id_type", value)}
 
@@ -222,7 +251,7 @@ export function MyAccount({ data }: { data: any }) {
           <Label>Nº de identificação</Label>
           <Input
 
-            readOnly={!data?.error}
+
             placeholder="Número de identificação"
             type="text"
             {...register("id_number")}

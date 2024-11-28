@@ -126,6 +126,27 @@ export const SUBMIT_DATA_STUDENT = async (data: {
   return await response.json();
 };
 
+export const EDIT_DATA_STUDENT = async (data: {
+  full_name: string;
+  birth_date: string;
+  id_type: string;
+  id_number: string;
+  phone_number: string;
+  address: string;
+  observations: string;
+}) => {
+  const AUTH_TOKEN = window.localStorage.getItem(`${APP_NAME}_`);
+  const response = await fetch(`${BASE_URL}/students/update-data`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${AUTH_TOKEN}`,
+    },
+    body: JSON.stringify(data),
+  });
+  return await response.json();
+};
+
 export const REGISTER_CLASS = async (data: { class_id: string }) => {
   const AUTH_TOKEN = window.localStorage.getItem(`${APP_NAME}_`);
   const response = await fetch(`${BASE_URL}/registrations`, {
