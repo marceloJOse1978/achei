@@ -1,8 +1,8 @@
 import { z } from "zod";
 import { Course, CourseDescription, CourseDescriptionList } from "./utils";
-export const BASE_URL = "https://app.enanza.ao/api";
+export const BASE_URL = "http://student-achei.mtapp.ao/api";
 export const APP_NAME = "achei_portal";
-export const APP_API = "https://wwww.enanza.ao/api";
+export const APP_API = "http://cors-achei.mtapp.ao/api";
 
 export const schemaCreateStudent = z.object({
   name: z.string().min(3),
