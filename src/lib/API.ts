@@ -1,8 +1,8 @@
 import { z } from "zod";
 import { Course, CourseDescription, CourseDescriptionList } from "./utils";
-export const BASE_URL = "http://student-achei.mtapp.ao/api";
+export const BASE_URL = "http://cors-achei.mtapp.ao/api";
 export const APP_NAME = "achei_portal";
-export const APP_API = "http://cors-achei.mtapp.ao/api";
+export const APP_API = "http://student-achei.mtapp.ao/api";
 
 export const schemaCreateStudent = z.object({
   name: z.string().min(3),
@@ -161,7 +161,7 @@ export const REGISTER_CLASS = async (data: { class_id: string }) => {
 };
 
 export const GET_CLASSES_PUBLIC = async (): Promise<CourseDescriptionList> => {
-  const response = await fetch(`https://www.enanza.ao/api/courses-all`, {
+  const response = await fetch(`${APP_API}/courses-all`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
@@ -173,7 +173,7 @@ export const GET_CLASSES_PUBLIC = async (): Promise<CourseDescriptionList> => {
 export const GET_COURSE_ONE = async (
   id: string
 ): Promise<CourseDescription> => {
-  const response = await fetch(`https://www.enanza.ao/api/courses-one/${id}`, {
+  const response = await fetch(`${APP_API}/courses-one/${id}`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
@@ -379,7 +379,7 @@ export const GET_POST_FORUM = async (
 export const GET_CONTENT_COURSE = async (id: string): Promise<Course[]> => {
   //const AUTH_TOKEN = window.localStorage.getItem(`${APP_NAME}_`);
    const response = await fetch(
-    `https://www.enanza.ao/api/course-contents/${id}`,
+    `${APP_API}/course-contents/${id}`,
     {
       method: "GET",
       headers: {
@@ -407,7 +407,7 @@ export const GET_CONTENT_COURSE = async (id: string): Promise<Course[]> => {
 }; */
 
 export const GET_CLASSES_AVAL = async () => {
-  const response = await fetch(`https://enanza.ao/api/classes-available`, {
+  const response = await fetch(`${APP_API}/api/classes-available`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",

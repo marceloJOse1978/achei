@@ -6,7 +6,7 @@ export const CREATE_USER_ACCOUNT = async (name:string, email:string, password:st
   });
 
   try {
-    const response = await fetch("https://app.enanza.ao/api/account/create", {
+    const response = await fetch(`http://cors-achei.mtapp.ao/api/account/create`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
