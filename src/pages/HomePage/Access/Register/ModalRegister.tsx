@@ -3,7 +3,7 @@ import * as Dialog from "@radix-ui/react-dialog";
 import "./styles.css";
 import "./Modal.css";
 import { useQuery, useMutation } from "@tanstack/react-query";
-import { saveLocalStorageToken, SUBMIT_CODE_VERIFY } from "../../../../lib/API";
+import { saveLocalStorageToken, SUBMIT_CODE_VERIFY,SUBMIT_RECODE } from "../../../../lib/API";
 import { UserContext, useUserContext } from "@/hooks/UserContext";
 import { Loader2 } from "lucide-react";
 import { toast } from "react-toastify";
@@ -36,6 +36,18 @@ const ModalRegister = ({
     },
   });
 
+  const { mutateAsync: resendCode, isPending: isPendingResend } = useMutation({
+    mutationFn: SUBMIT_RECODE,
+    onSuccess(data: any) {
+      toast.success("Código reenviado com sucesso");
+      console.log("onSuccess ", data);
+    },
+    onError(error) {
+      toast.error("Erro ao reenviar o código");
+      console.log("onError ", error);
+    },
+  });
+
   function handleSubmit() {
     if (code.length < 6) {
       toast.error("Codigo invalido");
@@ -43,6 +55,31 @@ const ModalRegister = ({
     }
     createRegister({ email, code });
   }
+
+  function handleResendCode() {
+    resendCode({ email });
+    toast.info("Código reenviado para o email.");
+  }
+
+  const [timer, setTimer] = React.useState(0);
+
+  React.useEffect(() => {
+    let interval: NodeJS.Timeout | null = null;
+
+    if (timer > 0) {
+      interval = setInterval(() => {
+        setTimer((prev) => prev - 1);
+      }, 1000);
+    } else if (interval) {
+      clearInterval(interval);
+    }
+
+    return () => {
+      if (interval) clearInterval(interval);
+    };
+  }, [timer]);
+
+  
 
   return (
     <Dialog.Root open={submit} onOpenChange={setSubmit}>
@@ -78,6 +115,25 @@ const ModalRegister = ({
             Confirmar
             {isPending && <Loader2 className="animate-spin" size={14} />}
           </button>
+
+            <button
+            onClick={() => {
+              if (timer === 0) {
+              setTimer(30); // Define o tempo de contagem regressiva
+              handleResendCode(); // Função para reenviar o código
+              }
+            }}
+            className="flex items-center justify-center gap-2 btn-confirm Button"
+            style={{
+              backgroundColor: timer === 0 ? "#f2f2f2" : "#d3d3d3",
+              color: timer === 0 ? "#000" : "#888",
+              cursor: timer === 0 ? "pointer" : "not-allowed",
+            }}
+            disabled={timer !== 0}
+            >
+            {timer === 0 ? "reenviar código" : `Aguarde ${timer}s`}
+            {isPending && <Loader2 className="animate-spin" size={14} />}
+            </button>
 
           <Dialog.Close asChild>
             <button className="btn-cancel Button violet">Cancelar</button>

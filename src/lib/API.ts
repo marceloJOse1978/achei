@@ -31,6 +31,23 @@ export const SUBMIT_CODE_VERIFY = async ({
   return await response.json();
 };
 
+export const SUBMIT_RECODE = async ({
+ email
+}: {
+  email: string;
+}) => {
+  const response = await fetch(
+    `${BASE_URL}/resend/${email}`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
+  return await response.json();
+};
+
 export const login = async ({
   email,
   password,

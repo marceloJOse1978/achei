@@ -10,6 +10,7 @@ import { CREATE_ACCOUNT } from "../../../../lib/API";
 import { Loader2 } from "lucide-react";
 import { toast } from "react-toastify";
 
+
 export default function Register() {
   // Estado para os campos do formulário
   const [name, setName] = useState("");
