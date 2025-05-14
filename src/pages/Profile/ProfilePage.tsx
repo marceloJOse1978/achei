@@ -109,7 +109,7 @@ export function MyAccount({ data }: { data: any }) {
       const dataAread = window.localStorage.getItem("data-aready");
       if (dataAread)
         window.localStorage.removeItem("data-aready");
-      console.log(data)
+        console.log(data)
       setValue("full_name", data[0]?.full_name);
       setValue("phone_number", data[0]?.phone_number);
       setValue("birth_date", data[0]?.birth_date);

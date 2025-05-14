@@ -1,8 +1,8 @@
 import { z } from "zod";
 import { Course, CourseDescription, CourseDescriptionList } from "./utils";
-export const BASE_URL = "https://cors-achei.mtapp.ao/api";
+export const BASE_URL = "https://cors-achei-api.quote360.ao/api";
 export const APP_NAME = "achei_portal";
-export const APP_API = "https://student-achei.mtapp.ao/api";
+export const APP_API = "https://student-achei.quote360.ao/api";
 
 export const schemaCreateStudent = z.object({
   name: z.string().min(3),
@@ -203,7 +203,7 @@ export const GET_QUIZ = async (
   id: string
 )=> {
   console.log(id)
-  const response = await fetch(`https://server-app.mtapp.ao/api/response?course_id=${id}&api_key=123456789`, {
+  const response = await fetch(`https://server-app.quote360.ao/api/response?course_id=${id}&api_key=123456789`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
@@ -216,7 +216,7 @@ export const GET_ONE_QUIZ = async (
   id: string
 )=> {
   console.log(id)
-  const response = await fetch(`https://server-app.mtapp.ao/api/quiz/${id}?api_key=123456789`, {
+  const response = await fetch(`https://server-app.quote360.ao/api/quiz/${id}?api_key=123456789`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
@@ -230,7 +230,7 @@ export const POST_QUESTION = async (
   data
 )=> {
   console.log(data)
-  const response = await fetch(`https://server-app.mtapp.ao/api/response?api_key=123456789`, {
+  const response = await fetch(`https://server-app.quote360.ao/api/response?api_key=123456789`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -260,7 +260,7 @@ export const POST_QUIZ_SUBMIT = async (
   data
 )=> {
   console.log(data)
-  const response = await fetch(`https://server-app.mtapp.ao/api/finish?api_key=123456789`, {
+  const response = await fetch(`https://server-app.quote360.ao/api/finish?api_key=123456789`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -275,7 +275,7 @@ export const POST_FORUM_POST = async (
   data
 )=> {
   console.log(data)
-  const response = await fetch(`https://server-app.mtapp.ao/api/post?api_key=123456789`, {
+  const response = await fetch(`https://server-app.quote360.ao/api/post?api_key=123456789`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -290,7 +290,7 @@ export const GET_ = async (
   id: string
 )=> {
   console.log(id)
-  const response = await fetch(`https://server-app.mtapp.ao/api/quiz/${id}?api_key=123456789`, {
+  const response = await fetch(`https://server-app.quote360.ao/api/quiz/${id}?api_key=123456789`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
@@ -303,7 +303,7 @@ export const GET_COMMENT_FORUM = async (
   id: string
 )=> {
   console.log(id)
-  const response = await fetch(`https://server-app.mtapp.ao/api/comment?api_key=123456789&post_id=${id}`, {
+  const response = await fetch(`https://server-app.quote360.ao/api/comment?api_key=123456789&post_id=${id}`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
@@ -315,7 +315,7 @@ export const DELETE_COMMENT_FORUM = async (
   id: string
 )=> {
   console.log(id)
-  const response = await fetch(`https://server-app.mtapp.ao/api/comment/${id}?api_key=123456789`, {
+  const response = await fetch(`https://server-app.quote360.ao/api/comment/${id}?api_key=123456789`, {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
@@ -329,7 +329,7 @@ export const DELETE_POST_FORUM = async (
   id: string
 )=> {
   console.log(id)
-  const response = await fetch(`https://server-app.mtapp.ao/api/post/${id}?api_key=123456789`, {
+  const response = await fetch(`https://server-app.quote360.ao/api/post/${id}?api_key=123456789`, {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
@@ -342,7 +342,7 @@ export const POST_COMMENT = async (
   data: any
 )=> {
   console.log(data)
-  const response = await fetch(`https://server-app.mtapp.ao/api/comment?api_key=123456789
+  const response = await fetch(`https://server-app.quote360.ao/api/comment?api_key=123456789
 `, {
     method: "POST",
     headers: {
@@ -357,7 +357,7 @@ export const POST_LIKE = async (
   data: any
 )=> {
   console.log(data)
-  const response = await fetch(`https://server-app.mtapp.ao/api/like?api_key=123456789
+  const response = await fetch(`https://server-app.quote360.ao/api/like?api_key=123456789
 `, {
     method: "POST",
     headers: {
@@ -373,7 +373,7 @@ export const GET_POSTS_FORUM = async (
   id: string
 )=> {
   console.log(id)
-  const response = await fetch(`https://server-app.mtapp.ao/api/post?api_key=123456789&course_id=${id}`, {
+  const response = await fetch(`https://server-app.quote360.ao/api/post?api_key=123456789&course_id=${id}`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
@@ -385,7 +385,7 @@ export const GET_POST_FORUM = async (
   id: string
 )=> {
   console.log(id)
-  const response = await fetch(`https://server-app.mtapp.ao/api/post/${id}?api_key=123456789`, {
+  const response = await fetch(`https://server-app.quote360.ao/api/post/${id}?api_key=123456789`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
@@ -434,7 +434,7 @@ export const GET_CLASSES_AVAL = async () => {
 };
 
 export const GET_LOGIN_LOGS = async (id) => {
-  const response = await fetch(`https://server-app.mtapp.ao/api/point?student_id=${id}&api_key=123456789`, {
+  const response = await fetch(`https://server-app.quote360.ao/api/point?student_id=${id}&api_key=123456789`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
@@ -442,10 +442,11 @@ export const GET_LOGIN_LOGS = async (id) => {
   });
   return await response.json();
 };
+
 export const GET_FILE_ONE = async (id
 ) => {
-  console.log(`https://server-app.mtapp.ao/api/uploads?course_id=${id}`)
-  const response = await fetch(`https://server-app.mtapp.ao/api/uploads?course_id=${id}`, {
+  console.log(`https://server-app.quote360.ao/api/uploads?course_id=${id}`)
+  const response = await fetch(`https://server-app.quote360.ao/api/uploads?course_id=${id}`, {
    method: "GET",
    headers: {
      "Content-Type": "application/json",

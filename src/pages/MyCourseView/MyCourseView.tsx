@@ -20,7 +20,7 @@ export type FormData = {
 };
 
 async function POST_MESSAGE(data: string) {
-  const response = await fetch("https://chatbot.mtapp.ao/message", {
+  const response = await fetch("https://chatbot.quote360.ao/message", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

@@ -61,7 +61,7 @@ export default function LoginPage() {
     "ip": data.ip
 } */
 
-  /*  fetch("http://server-app.mtapp.ao/api/auditSetting", 
+  /*  fetch("http://server-app.quote360.ao/api/auditSetting", 
     body:raw
   )
     .then((response) => response.json())
@@ -103,7 +103,7 @@ export default function LoginPage() {
         const time = currentDate.toTimeString().split(" ")[0]; // Formato: HH:MM:SS
 console.log(ip)
         // Faz a requisição para `auditSetting` após o login bem-sucedido
-        fetch("https://server-app.mtapp.ao/api/loginPoint", {
+        fetch("https://server-app.quote360.ao/api/loginPoint", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
