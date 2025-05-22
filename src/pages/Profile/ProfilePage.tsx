@@ -104,20 +104,21 @@ export function MyAccount({ data }: { data: any }) {
     resolver: zodResolver(schema, {}),
   });
   useEffect(() => {
-    console.log(data)
+    console.log("dados",data?.message)
     if (data && !data.error) {
       const dataAread = window.localStorage.getItem("data-aready");
       if (dataAread)
-        window.localStorage.removeItem("data-aready");
-        console.log(data)
-      setValue("full_name", data[0]?.full_name);
-      setValue("phone_number", data[0]?.phone_number);
-      setValue("birth_date", data[0]?.birth_date);
-      setDate(new Date(data[0]?.birth_date) || new Date("2000-01-01"));
-      setValue("address", data[0]?.address);
-      setValue("id_type", data[0]?.id_type);
-      setValue("id_number", data[0]?.id_number);
-      setValue("observations", data[0]?.observations || "");  // Observações, com valor padrão se não definido
+      window.localStorage.removeItem("data-aready");
+      setValue("full_name", data.full_name);
+      setValue("phone_number", data.phone_number);
+      setValue("birth_date", data.birth_date);
+      const birthDate = data?.birth_date;
+      const parsedDate = birthDate ? new Date(birthDate) : new Date("2000-01-01");
+      setDate(parsedDate);
+      setValue("address", data.address);
+      setValue("id_type", data.id_type);
+      setValue("id_number", data.id_number);
+      setValue("observations", data.observations || "");  // Observações, com valor padrão se não definido
     }
   }, [data])
 
@@ -133,6 +134,7 @@ export function MyAccount({ data }: { data: any }) {
       }
       toast.success("Dados salvos com sucesso");
       window.localStorage.removeItem("data-aready");
+      window.location.reload();
     },
     onError(error) {
       console.log(error);
@@ -158,21 +160,20 @@ export function MyAccount({ data }: { data: any }) {
   });
 
   const onSubmit = (FormData: any) => {
-    console.log(data);
-    if (!data || data.error)
+    if (data.message !== undefined){
       submitData(FormData);
-    else
+      
+    }
+    else{
       editData(FormData);
+    }
   };
   useEffect(() => {
     const dataBirth = format(date, "yyyy-MM-dd");
-    console.log("dataBirth ", dataBirth)
     if (!data?.error && date) {
       setValue("birth_date", dataBirth);
     }
   }, [date, data]);
-  console.log("data ", date)
-  console.log("getValues ", getValues());
   return (
     <form
       className="flex flex-col w-full gap-4"
